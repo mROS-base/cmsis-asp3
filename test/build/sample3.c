@@ -1,4 +1,4 @@
-#include <kernel.h>
+//#include <kernel.h>
 #include <t_syslog.h>
 #include <t_stdlib.h>
 #include "syssvc/serial.h"
@@ -6,6 +6,8 @@
 #include "kernel_cfg.h"
 #include "sample1.h"
 #include "stm32f7xx_hal.h"
+
+#include "cmsis_os.h"
 
 UART_HandleTypeDef huart3;
 
@@ -29,6 +31,7 @@ svc_perror(const char *file, int_t line, const char *expr, ER ercd)
 void main_task(intptr_t exinf)
 {
 	ER ercd;
+	osStatus_t ret;
 
 	SVC_PERROR(syslog_msk_log(LOG_UPTO(LOG_INFO), LOG_UPTO(LOG_EMERG)));
 	syslog(LOG_NOTICE, "Sample program starts (exinf = %d).", (int_t) exinf);
@@ -50,5 +53,9 @@ void main_task(intptr_t exinf)
 	SVC_PERROR(serial_ctl_por(TASK_PORTID,
 							(IOCTL_CRLF | IOCTL_FCSND | IOCTL_FCRCV)));
 	*/
-	ext_tsk();
+
+	ret = osThreadTerminate(NULL);
+	if (ret != osOK) {
+		syslog(LOG_NOTICE, "main_task() task terminate error %d", ret);
+	}
 }
