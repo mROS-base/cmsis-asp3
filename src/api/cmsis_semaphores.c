@@ -11,12 +11,12 @@ osSemaphoreId_t osSemaphoreNew(uint32_t max_count, uint32_t initial_count, const
 		return NULL;
 	}
 	else if (attr != NULL) {
-		CMSIS_ERROR("ERROR:%s %s() %d attr must be null\n", __FILE__, __FUNCTION__, __LINE__);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d attr must be null\n", __FILE__, __FUNCTION__, __LINE__);
 		return NULL;
 	}
 	semp = (CmsisSemType *)Atk2MemoryAlloc(sizeof(CmsisSemType));
 	if (semp == NULL) {
-		CMSIS_ERROR("ERROR:%s %s() %d cannot allocate memory size=%d\n", __FILE__, __FUNCTION__, __LINE__, sizeof(CmsisSemType));
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d cannot allocate memory size=%d\n", __FILE__, __FUNCTION__, __LINE__, sizeof(CmsisSemType));
 		return NULL;
 	}
 	semp->count = initial_count;
@@ -86,12 +86,12 @@ osStatus_t osSemaphoreDelete(osSemaphoreId_t semaphore_id)
 		return osErrorISR;
 	}
 	else if (semaphore_id == NULL) {
-		CMSIS_ERROR("ERROR:%s %s() %d semaphore_id is invalid value(0x%x)\n", __FILE__, __FUNCTION__, __LINE__, semaphore_id);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d semaphore_id is invalid value(0x%x)\n", __FILE__, __FUNCTION__, __LINE__, semaphore_id);
 		return osErrorParameter;
 	}
 	semp = (CmsisSemType*)semaphore_id;
 	if (semp->magicno != ATK2SEM_HEAD_MAGICNO) {
-		CMSIS_ERROR("ERROR:%s %s() %d invalid magicno(0x%x)\n", __FILE__, __FUNCTION__, __LINE__, semp->magicno);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d invalid magicno(0x%x)\n", __FILE__, __FUNCTION__, __LINE__, semp->magicno);
 		return osErrorParameter;
 	}
 	SuspendOSInterrupts();
@@ -153,7 +153,7 @@ osStatus_t osSemaphoreRelease_nolock(CmsisSemType *semp)
 osSemaphoreId osSemaphoreCreate(const osSemaphoreDef_t *semaphore_def, int32_t count)
 {
 	if (semaphore_def != NULL) {
-		CMSIS_ERROR("ERROR:%s %s() %d semaphore_def should not be null\n", __FILE__, __FUNCTION__, __LINE__);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d semaphore_def should not be null\n", __FILE__, __FUNCTION__, __LINE__);
 		return NULL;
 	}
 	return (osSemaphoreId)osSemaphoreNew(count, count, NULL);

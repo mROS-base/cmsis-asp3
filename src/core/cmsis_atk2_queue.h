@@ -5,7 +5,7 @@
 
 typedef struct {
 	uint16_t	count;
-	QUEUE		*entries;
+	CMSIS_IMPL_QUEUE		*entries;
 } Atk2QueueHeadType;
 
 #define Atk2QueueHeadInitializer(var)	\
@@ -16,10 +16,10 @@ do {	\
 	(qheadp)->entries = NULL;	\
 } while (0)
 
-extern void Atk2QueueHeadAddTail(Atk2QueueHeadType *headp, QUEUE *entry);
-extern QUEUE* Atk2QueueHeadRemoveFirst(Atk2QueueHeadType *headp);
-extern void Atk2QueueHeadRemoveEntry(Atk2QueueHeadType *headp, QUEUE *entry);
-extern void Atk2QueueHeadConditionalRemove(Atk2QueueHeadType *srcq, Atk2QueueHeadType *dstq, bool_t (*cond_func) (QUEUE *entry, void *arg), void *arg);
-extern void Atk2QueueHeadDoAction(Atk2QueueHeadType *headp, void (*act_func) (QUEUE *entry, void *arg), void *arg);
+extern void Atk2QueueHeadAddTail(Atk2QueueHeadType *headp, CMSIS_IMPL_QUEUE *entry);
+extern CMSIS_IMPL_QUEUE* Atk2QueueHeadRemoveFirst(Atk2QueueHeadType *headp);
+extern void Atk2QueueHeadRemoveEntry(Atk2QueueHeadType *headp, CMSIS_IMPL_QUEUE *entry);
+extern void Atk2QueueHeadConditionalRemove(Atk2QueueHeadType *srcq, Atk2QueueHeadType *dstq, bool_t (*cond_func) (CMSIS_IMPL_QUEUE *entry, void *arg), void *arg);
+extern void Atk2QueueHeadDoAction(Atk2QueueHeadType *headp, void (*act_func) (CMSIS_IMPL_QUEUE *entry, void *arg), void *arg);
 
 #endif /* _CMSIS_ATK2_QUEUE_H_ */

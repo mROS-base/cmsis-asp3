@@ -1,7 +1,6 @@
 #include "cmsis_atk2_message_queue.h"
 #include "cmsis_atk2_memory.h"
 #include "cmsis_atk2_task_sync.h"
-#include "cmsis_os.h"
 #include <string.h>
 
 Atk2MessageQueueType *Atk2MessageQueueCreate(Atk2MessageQueueConfigType *config)
@@ -19,7 +18,7 @@ Atk2MessageQueueType *Atk2MessageQueueCreate(Atk2MessageQueueConfigType *config)
 
 	top = Atk2MemoryAlloc(sizeof(Atk2MessageQueueType) + entry_total_size + msg_data_total_size);
 	if (top == NULL) {
-		CMSIS_ERROR("ERROR:%s %s() %d cannot allocate memory size=%d\n", __FILE__, __FUNCTION__, __LINE__, sizeof(Atk2MessageQueueType) + entry_total_size + msg_data_total_size);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d cannot allocate memory size=%d\n", __FILE__, __FUNCTION__, __LINE__, sizeof(Atk2MessageQueueType) + entry_total_size + msg_data_total_size);
 		return NULL;
 	}
 	qh = (Atk2MessageQueueType *)top;
@@ -69,13 +68,13 @@ StatusType Atk2MessageQueueGet(Atk2MessageQueueType *qh, void *msg_ptr, uint8_t 
 	TaskType taskID;
 
 	if (qh->magicno != ATK2MESSAGE_QUEUE_HEAD_MAGICNO) {
-		CMSIS_ERROR("ERROR:%s %s() %d invalid magicno=%d\n", __FILE__, __FUNCTION__, __LINE__, qh->magicno);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d invalid magicno=%d\n", __FILE__, __FUNCTION__, __LINE__, qh->magicno);
 		return E_OS_ID;
 	}
 	if (!CurrentContextIsISR()) {
 		ercd = GetTaskID(&taskID);
 		if (ercd != E_OK) {
-			CMSIS_ERROR("ERROR:%s %s() %d GetTaskID() err=%d\n", __FILE__, __FUNCTION__, __LINE__, ercd);
+			CMSIS_IMPL_ERROR("ERROR:%s %s() %d GetTaskID() err=%d\n", __FILE__, __FUNCTION__, __LINE__, ercd);
 			return ercd;
 		}
 	}
@@ -114,13 +113,13 @@ StatusType Atk2MessageQueuePut(Atk2MessageQueueType *qh, const void *msg_ptr, ui
 	TaskType taskID;
 
 	if (qh->magicno != ATK2MESSAGE_QUEUE_HEAD_MAGICNO) {
-		CMSIS_ERROR("ERROR:%s %s() %d invalid magicno=%d\n", __FILE__, __FUNCTION__, __LINE__, qh->magicno);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d invalid magicno=%d\n", __FILE__, __FUNCTION__, __LINE__, qh->magicno);
 		return E_OS_ID;
 	}
 	if (!CurrentContextIsISR()) {
 		ercd = GetTaskID(&taskID);
 		if (ercd != E_OK) {
-			CMSIS_ERROR("ERROR:%s %s() %d GetTaskID() err=%d\n", __FILE__, __FUNCTION__, __LINE__, ercd);
+			CMSIS_IMPL_ERROR("ERROR:%s %s() %d GetTaskID() err=%d\n", __FILE__, __FUNCTION__, __LINE__, ercd);
 			return ercd;
 		}
 	}

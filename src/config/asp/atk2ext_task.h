@@ -1,6 +1,8 @@
 #ifndef _ATK2EXT_TASK_H_
 #define _ATK2EXT_TASK_H_
 
+#include "atk2ext_common.h"
+
 #define TASKNAME(func)	TaskMain ## func
 #define ALARMCALLBACKNAME(func) AlarmManin ## func
 

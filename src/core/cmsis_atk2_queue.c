@@ -1,24 +1,24 @@
 #include "cmsis_atk2_queue.h"
 #include "cmsis_atk2_memory.h"
 
-void Atk2QueueHeadAddTail(Atk2QueueHeadType *headp, QUEUE *entry)
+void Atk2QueueHeadAddTail(Atk2QueueHeadType *headp, CMSIS_IMPL_QUEUE *entry)
 {
-	queue_initialize(entry);
+	cmsis_impl_queue_initialize(entry);
 	if (headp->entries == NULL) {
 		headp->entries = entry;
 	}
 	else {
 		//add last
-		queue_insert_prev(headp->entries, entry);
+		cmsis_impl_queue_insert_prev(headp->entries, entry);
 	}
 	headp->count++;
 	return;
 }
-void Atk2QueueHeadRemoveEntry(Atk2QueueHeadType *headp, QUEUE *entry)
+void Atk2QueueHeadRemoveEntry(Atk2QueueHeadType *headp, CMSIS_IMPL_QUEUE *entry)
 {
 	if (headp->entries != NULL) {
-		QUEUE *next = entry->p_next;
-		queue_delete(entry);
+		CMSIS_IMPL_QUEUE *next = entry->p_next;
+		cmsis_impl_queue_delete(entry);
 		headp->count--;
 		if (headp->count == 0) {
 			headp->entries = NULL;
@@ -29,20 +29,20 @@ void Atk2QueueHeadRemoveEntry(Atk2QueueHeadType *headp, QUEUE *entry)
 	}
 	return;
 }
-QUEUE* Atk2QueueHeadRemoveFirst(Atk2QueueHeadType *headp)
+CMSIS_IMPL_QUEUE* Atk2QueueHeadRemoveFirst(Atk2QueueHeadType *headp)
 {
-	QUEUE *first = headp->entries;
+	CMSIS_IMPL_QUEUE *first = headp->entries;
 	if (first != NULL) {
 		Atk2QueueHeadRemoveEntry(headp, first);
 	}
 	return first;
 }
-void Atk2QueueHeadConditionalRemove(Atk2QueueHeadType *srcq, Atk2QueueHeadType *dstq, bool_t (*cond_func) (QUEUE *entry, void *arg), void *arg)
+void Atk2QueueHeadConditionalRemove(Atk2QueueHeadType *srcq, Atk2QueueHeadType *dstq, bool_t (*cond_func) (CMSIS_IMPL_QUEUE *entry, void *arg), void *arg)
 {
 	uint32_t i;
 	uint32_t count = srcq->count;
-	QUEUE *entry = srcq->entries;
-	QUEUE *next;
+	CMSIS_IMPL_QUEUE *entry = srcq->entries;
+	CMSIS_IMPL_QUEUE *next;
 
 	for (i = 0; i < count; i++) {
 		next = entry->p_next;
@@ -54,12 +54,12 @@ void Atk2QueueHeadConditionalRemove(Atk2QueueHeadType *srcq, Atk2QueueHeadType *
 	}
 	return;
 }
-void Atk2QueueHeadDoAction(Atk2QueueHeadType *headp, void (*act_func) (QUEUE *entry, void *arg), void *arg)
+void Atk2QueueHeadDoAction(Atk2QueueHeadType *headp, void (*act_func) (CMSIS_IMPL_QUEUE *entry, void *arg), void *arg)
 {
 	uint32_t i;
 	uint32_t count = headp->count;
-	QUEUE *entry = headp->entries;
-	QUEUE *next;
+	CMSIS_IMPL_QUEUE *entry = headp->entries;
+	CMSIS_IMPL_QUEUE *next;
 	for (i = 0; i < count; i++) {
 		next = entry->p_next;
 		act_func(entry, arg);

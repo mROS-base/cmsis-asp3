@@ -3,7 +3,6 @@
 
 #include "atk2ext_common.h"
 #include "cmsis_os.h"
-#include "atk2ext_user_config.h"
 
 /***********************************************
  *
@@ -20,7 +19,6 @@ typedef struct {
 extern StatusType Atk2TaskConfigSet(const osThreadFunc_t func, void *argument);
 extern StatusType Atk2TaskConfigGet(UserThreadAtk2TaskMapEntryType *config);
 extern StatusType Atk2TaskConfigGetTaskID(const osThreadFunc_t func, TaskType *taskID);
-extern UserThreadAtk2TaskMapEntryType user_thread_atk2task_map[USER_THREAD_NUM];
 
 /***********************************************
  *

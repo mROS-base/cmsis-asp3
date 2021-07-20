@@ -11,3 +11,14 @@ const Atk2ExtFlagMapEntryType atk2ext_flag_user_map[ATK2EXT_ASP_FLAG_USER_NUM] =
 
 
 };
+
+Atk2ExtFlagMapEntryType* cmsis_get_flag_user_map(void)
+{
+	return atk2ext_flag_user_map;
+}
+
+int cmsis_get_flag_user_num(void)
+{
+	return ATK2EXT_ASP_FLAG_USER_NUM;
+}
+

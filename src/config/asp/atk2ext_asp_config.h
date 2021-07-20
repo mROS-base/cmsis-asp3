@@ -1,5 +1,5 @@
-#ifndef _ATK2EXT_CONFIG_H_
-#define _ATK2EXT_CONFIG_H_
+#ifndef _ATK2EXT_ASP_CONFIG_H_
+#define _ATK2EXT_ASP_CONFIG_H_
 
 #include "atk2ext_common.h"
 
@@ -13,4 +13,4 @@ typedef struct {
 
 extern ER Atk2ExtTask2EventFlag(ID taskID, ID *flgid);
 
-#endif /* _ATK2EXT_CONFIG_H_ */
+#endif /* _ATK2EXT_ASP_CONFIG_H_ */

@@ -2,7 +2,7 @@
 #include "cmsis_atk2_time.h"
 
 typedef struct {
-	QUEUE				queue;
+	CMSIS_IMPL_QUEUE	queue;
 	TaskType			taskID;
 	uint32_t			timeout;
 	uint32_t			stick;
@@ -11,14 +11,14 @@ typedef struct {
 } Atk2TaskWaitInfoType;
 
 typedef struct {
-	QUEUE						wait_queue;
+	CMSIS_IMPL_QUEUE			wait_queue;
 	void						*data;
 	Atk2TaskWaitInfoType		winfo;
 } Atk2TaskWaitQueueEntryType;
 
-static bool_t Atk2TaskIsTimeout(QUEUE *entry, void *arg);
-static void Atk2TaskWakeup(QUEUE *entry, void *arg);
-static bool_t Atk2TaskHasTargetId(QUEUE *entry, void *arg);
+static bool_t Atk2TaskIsTimeout(CMSIS_IMPL_QUEUE *entry, void *arg);
+static void Atk2TaskWakeup(CMSIS_IMPL_QUEUE *entry, void *arg);
+static bool_t Atk2TaskHasTargetId(CMSIS_IMPL_QUEUE *entry, void *arg);
 static void Atk2TaskSyncWaitInfoInit(Atk2TaskWaitInfoType *winfop, uint32_t timeout, TaskType taskID);
 
 
@@ -31,7 +31,7 @@ StatusType Atk2TaskSyncSleep(uint32_t timeout)
 
 	StatusType ercd = GetTaskID(&taskID);
 	if (ercd != E_OK) {
-		CMSIS_ERROR("ERROR:%s %s() %d winfo.ercd=%d\n", __FILE__, __FUNCTION__, __LINE__, ercd);
+		CMSIS_IMPL_ERROR("ERROR:%s %s() %d winfo.ercd=%d\n", __FILE__, __FUNCTION__, __LINE__, ercd);
 		return winfo.ercd;
 	}
 	Atk2TaskSyncWaitInfoInit(&winfo, timeout, taskID);
@@ -132,14 +132,14 @@ static void Atk2TaskSyncWaitInfoInit(Atk2TaskWaitInfoType *winfop, uint32_t time
 	winfop->timeout = timeout;
 	winfop->stick = Atk2TimeGetTickCount();
 	winfop->expiretick = Atk2TimeGetExpireTickCount(winfop->stick, timeout);
-	queue_initialize(&winfop->queue);
+	cmsis_impl_queue_initialize(&winfop->queue);
 	winfop->taskID = taskID;
 	winfop->ercd = E_OK;
 	return;
 }
 
 
-static bool_t Atk2TaskIsTimeout(QUEUE *entry, void *arg)
+static bool_t Atk2TaskIsTimeout(CMSIS_IMPL_QUEUE *entry, void *arg)
 {
 	uint32_t curr = *((uint32_t*)arg);
 	Atk2TaskWaitInfoType *winfop = (Atk2TaskWaitInfoType *)entry;
@@ -152,7 +152,7 @@ static bool_t Atk2TaskIsTimeout(QUEUE *entry, void *arg)
 	return false;
 }
 
-static void Atk2TaskWakeup(QUEUE *entry, void *arg)
+static void Atk2TaskWakeup(CMSIS_IMPL_QUEUE *entry, void *arg)
 {
 	Atk2TaskWaitInfoType *winfop = (Atk2TaskWaitInfoType *)entry;
 	StatusType ercd = *((StatusType*)arg);
@@ -161,7 +161,7 @@ static void Atk2TaskWakeup(QUEUE *entry, void *arg)
 	return;
 }
 
-static bool_t Atk2TaskHasTargetId(QUEUE *entry, void *arg)
+static bool_t Atk2TaskHasTargetId(CMSIS_IMPL_QUEUE *entry, void *arg)
 {
 	TaskType taskID = *((TaskType*)arg);
 	Atk2TaskWaitInfoType *winfop = (Atk2TaskWaitInfoType *)entry;

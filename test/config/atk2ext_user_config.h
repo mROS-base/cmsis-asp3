@@ -1,6 +1,7 @@
 #ifndef _ATK2EXT_CONFIG_H_
 #define _ATK2EXT_CONFIG_H_
 
+#include "cmsis_os.h"
 /***********************************************
  *
  * MEMORY

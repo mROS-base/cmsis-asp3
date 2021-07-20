@@ -17,7 +17,7 @@ typedef struct {
 
 
 typedef struct {
-	QUEUE						queue;
+	CMSIS_IMPL_QUEUE						queue;
 	/*
 	 * Priority
 	 *
