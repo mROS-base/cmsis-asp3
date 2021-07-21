@@ -1,11 +1,11 @@
-ATK2EXTEND_DIR := ../../../atk2ext
+ATK2EXTEND_DIR := $(ROOTDIR)/cmsis-asp3
 
-#APPL_CFG += atk2ext_test.cfg
 APPLDIR	+= $(ATK2EXTEND_DIR)/test
 APPLDIR	+= $(ATK2EXTEND_DIR)/test/api_test
 APPLDIR	+= $(ATK2EXTEND_DIR)/test/fw
 APPLDIR	+= $(ATK2EXTEND_DIR)/test/config
 APPLDIR	+= $(ATK2EXTEND_DIR)/test/config/asp
+APPLDIR	+= $(ATK2EXTEND_DIR)/test/build
 
 APPL_COBJS	+= atk2ext_test.o
 APPL_COBJS	+= atk2ext_asp_user_config.o
@@ -18,4 +18,3 @@ APPL_COBJS	+= cmsis_message_queue_test.o
 APPL_COBJS	+= cmsis_mutexes_test.o
 APPL_COBJS	+= cmsis_semaphores_test.o
 APPL_COBJS	+= cmsis_thread_test.o
-
