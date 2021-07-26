@@ -1,7 +1,7 @@
 #include "cmsis_os.h"
-#include "atk2ext_sys_config.h"
-#include "cmsis_atk2_message_queue.h"
-#include "cmsis_atk2_task_sync.h"
+#include "autosar_os_ext_sys_config.h"
+#include "cmsis_autosar_os_message_queue.h"
+#include "cmsis_autosar_os_task_sync.h"
 #include <string.h>
 
 osMessageQueueId_t osMessageQueueNew(
@@ -10,7 +10,7 @@ osMessageQueueId_t osMessageQueueNew(
 		const osMessageQueueAttr_t *attr)
 {
 	uint32_t aligned_msg_size;
-	Atk2MessageQueueConfigType config;
+	AutosarOsMessageQueueConfigType config;
 
 	if (CurrentContextIsISR()) {
 		return NULL;
@@ -33,13 +33,13 @@ osMessageQueueId_t osMessageQueueNew(
 	config.control_datap = NULL;
 	config.entries_datap = NULL;
 
-	return (osMessageQueueId_t*)Atk2MessageQueueCreate(&config);
+	return (osMessageQueueId_t*)AutosarOsMessageQueueCreate(&config);
 }
 
 osStatus_t osMessageQueueDelete(osMessageQueueId_t mq_id)
 {
 	osStatus_t err = osOK;
-	Atk2MessageQueueType *qh = (Atk2MessageQueueType*)mq_id;
+	AutosarOsMessageQueueType *qh = (AutosarOsMessageQueueType*)mq_id;
 
 	if (CurrentContextIsISR()) {
 		return osErrorISR;
@@ -50,7 +50,7 @@ osStatus_t osMessageQueueDelete(osMessageQueueId_t mq_id)
 	}
 	SuspendOSInterrupts();
 	if ((qh->used.count == 0) && (qh->getter_waiting.count == 0) && (qh->putter_waiting.count == 0)) {
-		StatusType ercd = Atk2MessageQueueDelete((Atk2MessageQueueType*)mq_id);
+		StatusType ercd = AutosarOsMessageQueueDelete((AutosarOsMessageQueueType*)mq_id);
 		if (ercd != E_OK) {
 			err = osErrorParameter;
 		}
@@ -71,7 +71,7 @@ osStatus_t osMessageQueueGet(
 	uint32_t arg_timeout = timeout;
 	osStatus_t err = osErrorParameter;
 	StatusType ercd;
-	Atk2MessageQueueType *qh = (Atk2MessageQueueType*)mq_id;
+	AutosarOsMessageQueueType *qh = (AutosarOsMessageQueueType*)mq_id;
 	if (CurrentContextIsISR() && (timeout != 0)) {
 		return osErrorParameter;
 	}
@@ -92,11 +92,11 @@ osStatus_t osMessageQueueGet(
 	}
 	else {
 		if (timeout == osWaitForever) {
-			arg_timeout = ATK2_TASK_SYNC_WAIT_FOREVER;
+			arg_timeout = AUTOSAR_OS_TASK_SYNC_WAIT_FOREVER;
 		}
 		err = osErrorTimeout;
 	}
-	ercd = Atk2MessageQueueGet(qh, msg_ptr, msg_prio, arg_timeout);
+	ercd = AutosarOsMessageQueueGet(qh, msg_ptr, msg_prio, arg_timeout);
 	if (ercd == E_OK) {
 		err = osOK;
 	}
@@ -111,12 +111,12 @@ osStatus_t osMessageQueueGet(
 
 uint32_t osMessageQueueGetCount(osMessageQueueId_t mq_id)
 {
-	Atk2MessageQueueType *qh = (Atk2MessageQueueType*)mq_id;
+	AutosarOsMessageQueueType *qh = (AutosarOsMessageQueueType*)mq_id;
 	if (qh == NULL) {
 		CMSIS_IMPL_ERROR("ERROR:%s %s() %d mq_id is invalid value(0x%x)\n", __FILE__, __FUNCTION__, __LINE__, mq_id);
 		return 0;
 	}
-	else if (!Atk2MessageQueueIsValid(qh)) {
+	else if (!AutosarOsMessageQueueIsValid(qh)) {
 		CMSIS_IMPL_ERROR("ERROR:%s %s() %d invalid magicno=%d\n", __FILE__, __FUNCTION__, __LINE__, qh->magicno);
 		return 0;
 	}
@@ -132,7 +132,7 @@ osStatus_t osMessageQueuePut(
 	uint32_t arg_timeout = timeout;
 	osStatus_t err = osErrorParameter;
 	StatusType ercd;
-	Atk2MessageQueueType *qh = (Atk2MessageQueueType*)mq_id;
+	AutosarOsMessageQueueType *qh = (AutosarOsMessageQueueType*)mq_id;
 
 	if (CurrentContextIsISR() && (timeout != 0)) {
 		return osErrorParameter;
@@ -154,11 +154,11 @@ osStatus_t osMessageQueuePut(
 	}
 	else {
 		if (timeout == osWaitForever) {
-			arg_timeout = ATK2_TASK_SYNC_WAIT_FOREVER;
+			arg_timeout = AUTOSAR_OS_TASK_SYNC_WAIT_FOREVER;
 		}
 		err = osErrorTimeout;
 	}
-	ercd = Atk2MessageQueuePut(qh, msg_ptr, msg_prio, arg_timeout);
+	ercd = AutosarOsMessageQueuePut(qh, msg_ptr, msg_prio, arg_timeout);
 	if (ercd == E_OK) {
 		err = osOK;
 	}

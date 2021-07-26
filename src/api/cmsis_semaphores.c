@@ -1,7 +1,7 @@
 #include "cmsis_os.h"
 #include "cmsis_semaphores_private.h"
-#include "cmsis_atk2_task_sync.h"
-#include "cmsis_atk2_memory.h"
+#include "cmsis_autosar_os_task_sync.h"
+#include "cmsis_autosar_os_memory.h"
 
 osSemaphoreId_t osSemaphoreNew(uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t * attr)
 {
@@ -14,15 +14,15 @@ osSemaphoreId_t osSemaphoreNew(uint32_t max_count, uint32_t initial_count, const
 		CMSIS_IMPL_ERROR("ERROR:%s %s() %d attr must be null\n", __FILE__, __FUNCTION__, __LINE__);
 		return NULL;
 	}
-	semp = (CmsisSemType *)Atk2MemoryAlloc(sizeof(CmsisSemType));
+	semp = (CmsisSemType *)AutosarOsMemoryAlloc(sizeof(CmsisSemType));
 	if (semp == NULL) {
 		CMSIS_IMPL_ERROR("ERROR:%s %s() %d cannot allocate memory size=%d\n", __FILE__, __FUNCTION__, __LINE__, sizeof(CmsisSemType));
 		return NULL;
 	}
 	semp->count = initial_count;
 	semp->max_count = max_count;
-	semp->magicno = ATK2SEM_HEAD_MAGICNO;
-	Atk2QueueHeadInit(&semp->waiting);
+	semp->magicno = AUTOSAR_OSSEM_HEAD_MAGICNO;
+	AutosarOsQueueHeadInit(&semp->waiting);
 	return (osSemaphoreId_t)semp;
 }
 
@@ -39,7 +39,7 @@ osStatus_t osSemaphoreAcquire(osSemaphoreId_t semaphore_id, uint32_t timeout)
 		return osErrorParameter;
 	}
 	semp = (CmsisSemType*)semaphore_id;
-	if (semp->magicno != ATK2SEM_HEAD_MAGICNO) {
+	if (semp->magicno != AUTOSAR_OSSEM_HEAD_MAGICNO) {
 		return osErrorParameter;
 	}
 	if (!is_ctx_isr) {
@@ -69,7 +69,7 @@ osStatus_t osSemaphoreRelease(osSemaphoreId_t semaphore_id)
 		return osErrorParameter;
 	}
 	semp = (CmsisSemType*)semaphore_id;
-	if (semp->magicno != ATK2SEM_HEAD_MAGICNO) {
+	if (semp->magicno != AUTOSAR_OSSEM_HEAD_MAGICNO) {
 		return osErrorParameter;
 	}
 	SuspendOSInterrupts();
@@ -90,14 +90,14 @@ osStatus_t osSemaphoreDelete(osSemaphoreId_t semaphore_id)
 		return osErrorParameter;
 	}
 	semp = (CmsisSemType*)semaphore_id;
-	if (semp->magicno != ATK2SEM_HEAD_MAGICNO) {
+	if (semp->magicno != AUTOSAR_OSSEM_HEAD_MAGICNO) {
 		CMSIS_IMPL_ERROR("ERROR:%s %s() %d invalid magicno(0x%x)\n", __FILE__, __FUNCTION__, __LINE__, semp->magicno);
 		return osErrorParameter;
 	}
 	SuspendOSInterrupts();
 	if (semp->waiting.count == 0) {
 		semp->magicno = 0;
-		Atk2MemoryFree(semp);
+		AutosarOsMemoryFree(semp);
 	}
 	else {
 		err = osErrorResource;
@@ -120,9 +120,9 @@ osStatus_t osSemaphoreAcquire_nolock(CmsisSemType *semp, uint32_t timeout, TaskT
 		}
 		else {
 			if (timeout == osWaitForever) {
-				timeout = ATK2_TASK_SYNC_WAIT_FOREVER;
+				timeout = AUTOSAR_OS_TASK_SYNC_WAIT_FOREVER;
 			}
-			(void)Atk2TaskSyncWait(&semp->waiting, timeout, &ercd, taskID);
+			(void)AutosarOsTaskSyncWait(&semp->waiting, timeout, &ercd, taskID);
 			if (ercd != E_OK) {
 				err = osErrorTimeout;
 			}
@@ -135,7 +135,7 @@ osStatus_t osSemaphoreRelease_nolock(CmsisSemType *semp)
 {
 	osStatus_t err = osOK;
 	if (semp->waiting.count > 0) {
-		(void)Atk2TaskSyncWakeupFirstEntry(&semp->waiting, NULL, E_OK);
+		(void)AutosarOsTaskSyncWakeupFirstEntry(&semp->waiting, NULL, E_OK);
 	}
 	else if (semp->count < semp->max_count) {
 		semp->count++;
@@ -174,7 +174,7 @@ int32_t osSemaphoreWait(osSemaphoreId semaphore_id, uint32_t millisec)
 		return -1;
 	}
 	semp = (CmsisSemType*)semaphore_id;
-	if (semp->magicno != ATK2SEM_HEAD_MAGICNO) {
+	if (semp->magicno != AUTOSAR_OSSEM_HEAD_MAGICNO) {
 		return -1;
 	}
 	ercd = GetTaskID(&taskID);

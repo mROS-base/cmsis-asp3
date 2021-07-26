@@ -1,5 +1,5 @@
-#include "atk2ext_user_config.h"
-#include "atk2ext_common.h"
+#include "autosar_os_ext_user_config.h"
+#include "autosar_os_ext_common.h"
 
 uint8_t appheap[APP_HEAP_SIZE] __attribute__((section(".appheap")));
 

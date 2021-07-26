@@ -1,6 +1,6 @@
 #include "cmsis_os.h"
-#include "atk2ext_common.h"
-#include "atk2ext_sys_config.h"
+#include "autosar_os_ext_common.h"
+#include "autosar_os_ext_sys_config.h"
 
 osThreadId_t osThreadNew(osThreadFunc_t	func, void *argument, const osThreadAttr_t *attr)
 {
@@ -10,12 +10,12 @@ osThreadId_t osThreadNew(osThreadFunc_t	func, void *argument, const osThreadAttr
 	if (CurrentContextIsISR()) {
 		return NULL;
 	}
-	ercd = Atk2TaskConfigSet(func, argument);
+	ercd = AutosarOsTaskConfigSet(func, argument);
 	if (ercd != E_OK) {
 		CMSIS_IMPL_ERROR("ERROR:%s %s() %d unrecognized func=0x%x\n", __FILE__, __FUNCTION__, __LINE__, func);
 		return NULL;
 	}
-	ercd = Atk2TaskConfigGetTaskID(func, &taskID);
+	ercd = AutosarOsTaskConfigGetTaskID(func, &taskID);
 	if (ercd != E_OK) {
 		return NULL;
 	}

@@ -1,10 +1,10 @@
-#include "atk2ext_common.h"
+#include "autosar_os_ext_common.h"
 #include "cmsis_os.h"
-#include "atk2ext_test.h"
-#include "atk2ext_testfw.h"
-#include "atk2ext_user_config.h"
+#include "autosar_os_ext_test.h"
+#include "autosar_os_ext_testfw.h"
+#include "autosar_os_ext_user_config.h"
 
-#include "cmsis_atk2_time.h"
+#include "cmsis_autosar_os_time.h"
 
 #define CMSIS_SEMPHORES_TEST_TRUE   1
 #define CMSIS_SEMPHORES_TEST_FALSE  0
@@ -56,12 +56,12 @@ static void test_exec(void (*exec_test_func)(void))
 #define TESTNAME "cmsis_semaphores_test"
 void cmsis_semaphores_test_init(void)
 {
-	atk2ext_testfw_start_test(TESTNAME);
+	autosar_os_ext_testfw_start_test(TESTNAME);
 	return;
 }
 void cmsis_semaphores_test_end(void)
 {
-	atk2ext_testfw_end_test();
+	autosar_os_ext_testfw_end_test();
 	return;
 }
 
@@ -113,7 +113,7 @@ static void test_New_01(void)
 		//done
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 2, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -140,7 +140,7 @@ static void test_Acquire_01(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -179,8 +179,8 @@ static void test_Acquire_02(void)
 		info.id = id;
 		info.timeout = TEST_SEMPHORES_DELAY_TIME_100ms;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		//do
 		err = osSemaphoreAcquire(id, 0);
@@ -194,7 +194,7 @@ static void test_Acquire_02(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -216,10 +216,10 @@ static void test_Acquire_03(void)
 		info.id = id;
 		info.timeout = TEST_SEMPHORES_DELAY_TIME_100ms;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
 
 
 		//do
@@ -232,7 +232,7 @@ static void test_Acquire_03(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 3, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -254,10 +254,10 @@ static void test_Acquire_04(void)
 		info.id = id;
 		info.timeout = TEST_SEMPHORES_DELAY_TIME_100ms;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
 
 
 		//do
@@ -270,7 +270,7 @@ static void test_Acquire_04(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 3, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -310,10 +310,10 @@ static void test_Acquire_05(void)
 		TestAssertEq(api_name, 2, osOK, err);
 
 		//do
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
-		Atk2TimeIncTickCountSet((osWaitForever - 10U));
+		AutosarOsTimeIncTickCountSet((osWaitForever - 10U));
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_100ms);
 
 		//done
@@ -323,7 +323,7 @@ static void test_Acquire_05(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -348,13 +348,13 @@ static void test_Acquire_06(void)
 		TestAssertEq(api_name, 2, osOK, err);
 
 		//do
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
 
 
-		Atk2TimeIncTickCountSet((osWaitForever - 10U));
+		AutosarOsTimeIncTickCountSet((osWaitForever - 10U));
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_100ms);
 
 		//done
@@ -364,7 +364,7 @@ static void test_Acquire_06(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -389,15 +389,15 @@ static void test_Acquire_07(void)
 		TestAssertEq(api_name, 2, osOK, err);
 
 		//do
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer3, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestConsumer3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer3, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestConsumer3_Body, (void*)&info, NULL);
 
 
-		Atk2TimeIncTickCountSet((osWaitForever - 10U));
+		AutosarOsTimeIncTickCountSet((osWaitForever - 10U));
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_100ms);
 
 		//done
@@ -407,7 +407,7 @@ static void test_Acquire_07(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -433,7 +433,7 @@ static void test_Acquire_08(void)
 
 		//done
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -474,14 +474,14 @@ static void test_Acquire_09(void)
 		callback_info.api_name = "osSemaphoreAcquire:No.9:callback";
 
 		//do
-		atk2ext_testfw_set_cyclic_handler_func(test_acquire_task_callback3, NULL);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_acquire_task_callback3, NULL);
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_10ms);
 
 		//done
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -507,8 +507,8 @@ static void test_Release_01(void)
 		info.api_name = "osSemaphoreRelease:No.1:callback";
 		info.timeout = TEST_SEMPHORES_DELAY_TIME_100ms;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		//do
 		err = osSemaphoreRelease(id);
@@ -520,7 +520,7 @@ static void test_Release_01(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -545,8 +545,8 @@ static void test_Release_02(void)
 		info.api_name = "osSemaphoreRelease:No.2:callback";
 		info.timeout = TEST_SEMPHORES_DELAY_TIME_10ms;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_100ms);
 
@@ -558,7 +558,7 @@ static void test_Release_02(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -583,8 +583,8 @@ static void test_Release_03(void)
 		info.api_name = "osSemaphoreRelease:No.3:callback";
 		info.timeout = TEST_SEMPHORES_DELAY_TIME_10ms;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_10ms);
 
@@ -599,7 +599,7 @@ static void test_Release_03(void)
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 5, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -621,14 +621,14 @@ static void test_Release_04(void)
 		callback_info.api_name = "osSemaphoreRelease:No.4:callback";
 
 		//do
-		atk2ext_testfw_set_cyclic_handler_func(test_acquire_task_callback3, NULL);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_acquire_task_callback3, NULL);
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_10ms);
 
 		//done
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 3, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -654,7 +654,7 @@ static void test_Release_05(void)
 
 		//done
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -691,8 +691,8 @@ static void test_Release_06(void)
 		info.api_name = "osSemaphoreRelease:No.6:callback";
 
 		//do
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_release_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_release_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		err = osSemaphoreAcquire(id, 0);
 		TestAssertEq(api_name, 3, osOK, err);
@@ -703,7 +703,7 @@ static void test_Release_06(void)
 
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 5, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -743,14 +743,14 @@ static void test_Release_07(void)
 		callback_info.api_name = "osSemaphoreRelease:No.7:callback";
 
 		//do
-		atk2ext_testfw_set_cyclic_handler_func(test_release_task_callback2, NULL);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_release_task_callback2, NULL);
 		(void)osDelay(TEST_SEMPHORES_DELAY_TIME_10ms);
 
 		//done
 		err = osSemaphoreDelete(id);
 		TestAssertEq(api_name, 3, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -774,7 +774,7 @@ static void test_dleate_01(void)
 
 		//done
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -799,7 +799,7 @@ static void test_dleate_02(void)
 
 		//done
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
