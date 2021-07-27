@@ -11,9 +11,9 @@ CDEFS := -DUSE_ASP3_FOR_STM
 APPLNAME = sample3
 
 # information for directory tree
-ROOTDIR := ../../..
-DRIVERSDIR := $(ROOTDIR)/STM32CubeF7/Drivers
-
+ROOTDIR           := ../../..
+DRIVERSDIR        := $(ROOTDIR)/STM32CubeF7/Drivers
+MIDDLESDIR        := $(ROOTDIR)/STM32CubeF7/Middlewares
 CMSIS_MAKEFILEDIR := ${ROOTDIR}/cmsis-asp3
 ASP3_MAKEFILEDIR  := ${ROOTDIR}/asp3-f767zi
 

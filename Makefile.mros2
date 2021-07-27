@@ -2,17 +2,17 @@
 # Makefile definition for autosar_os_ext stack
 #
 
-AUTSAR_OS_EXTDIR := ${ROOTDIR}/cmsis-asp3/src
+AUTSAR_OS_EXT_DIR := ${ROOTDIR}/cmsis-asp3/src
 
-INCLUDES += -I$(AUTSAR_OS_EXTDIR)/api
-INCLUDES += -I$(AUTSAR_OS_EXTDIR)/config
-INCLUDES += -I$(DRIVERSDIR)/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+INCLUDES += -I$(AUTSAR_OS_EXT_DIR)/api
+INCLUDES += -I$(AUTSAR_OS_EXT_DIR)/config
+INCLUDES += -I$(MIDDLESDIR)/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
 
-APPLDIR	+= $(AUTSAR_OS_EXTDIR)/api
-APPLDIR	+= $(AUTSAR_OS_EXTDIR)/core
-APPLDIR	+= $(AUTSAR_OS_EXTDIR)/sys
-APPLDIR += $(AUTSAR_OS_EXTDIR)/config
-APPLDIR += $(AUTSAR_OS_EXTDIR)/config/asp
+APPLDIR	+= $(AUTSAR_OS_EXT_DIR)/api
+APPLDIR	+= $(AUTSAR_OS_EXT_DIR)/core
+APPLDIR	+= $(AUTSAR_OS_EXT_DIR)/sys
+APPLDIR += $(AUTSAR_OS_EXT_DIR)/config
+APPLDIR += $(AUTSAR_OS_EXT_DIR)/config/asp
 
 APPL_COBJS += cmsis_generic.o
 APPL_COBJS += cmsis_kernel.o
