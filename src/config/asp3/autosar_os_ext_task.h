@@ -1,5 +1,5 @@
-#ifndef _AUTSAR_OS_EXT_TASK_H_
-#define _AUTSAR_OS_EXT_TASK_H_
+#ifndef _AUTOSAR_OS_EXT_TASK_H_
+#define _AUTOSAR_OS_EXT_TASK_H_
 
 #include "autosar_os_ext_common.h"
 
@@ -9,4 +9,4 @@
 extern void	TASKNAME(AutosarOsExtCyclicTask) (intptr_t exinf);
 extern void ALARMCALLBACKNAME(AutosarOsExtCyclicHandler) (intptr_t exinf);
 
-#endif /* _AUTSAR_OS_EXT_TASK_H_ */
+#endif /* _AUTOSAR_OS_EXT_TASK_H_ */

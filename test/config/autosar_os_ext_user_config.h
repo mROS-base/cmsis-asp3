@@ -1,5 +1,5 @@
-#ifndef _AUTSAR_OS_EXT_CONFIG_H_
-#define _AUTSAR_OS_EXT_CONFIG_H_
+#ifndef _AUTOSAR_OS_EXT_CONFIG_H_
+#define _AUTOSAR_OS_EXT_CONFIG_H_
 
 #include "cmsis_os.h"
 /***********************************************
@@ -25,4 +25,4 @@ extern void AutosarOsTaskTestSupplier1_Body(void *argument);
 extern void AutosarOsTaskTestSupplier2_Body(void *argument);
 extern void AutosarOsTaskTestSupplier3_Body(void *argument);
 
-#endif /* _AUTSAR_OS_EXT_CONFIG_H_ */
+#endif /* _AUTOSAR_OS_EXT_CONFIG_H_ */

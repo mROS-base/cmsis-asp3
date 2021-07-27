@@ -1,5 +1,5 @@
-#ifndef _AUTSAR_OS_EXTEND_COMMON_PRIVATE_H_
-#define _AUTSAR_OS_EXTEND_COMMON_PRIVATE_H_
+#ifndef _AUTOSAR_OS_EXTEND_COMMON_PRIVATE_H_
+#define _AUTOSAR_OS_EXTEND_COMMON_PRIVATE_H_
 
 #include "autosar_os_ext_common.h"
 
@@ -24,4 +24,4 @@ extern bool_t CurrentContextIsISR(void);
 
 
 
-#endif /* _AUTSAR_OS_EXTEND_COMMON_H_ */
+#endif /* _AUTOSAR_OS_EXTEND_COMMON_H_ */

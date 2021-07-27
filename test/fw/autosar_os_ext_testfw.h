@@ -1,5 +1,5 @@
-#ifndef _AUTSAR_OS_EXT_TESTFW_H_
-#define _AUTSAR_OS_EXT_TESTFW_H_
+#ifndef _AUTOSAR_OS_EXT_TESTFW_H_
+#define _AUTOSAR_OS_EXT_TESTFW_H_
 
 #include "autosar_os_ext_common.h"
 #include "autosar_os_ext_user_config.h"
@@ -93,4 +93,4 @@ extern TestFwOperationType test_fw_operations[TEST_FW_OP_NUM];
 		{ .result = true, .testname = #name, .init = name ## _init , .start = name ## _start , .end = name ## _end , .get_exec_num = name ## _get_exec_num }
 
 
-#endif /* _AUTSAR_OS_EXT_TESTFW_H_ */
+#endif /* _AUTOSAR_OS_EXT_TESTFW_H_ */

@@ -1,5 +1,5 @@
-#ifndef _AUTSAR_OS_EXT_TEST_H_
-#define _AUTSAR_OS_EXT_TEST_H_
+#ifndef _AUTOSAR_OS_EXT_TEST_H_
+#define _AUTOSAR_OS_EXT_TEST_H_
 
 
 #ifdef OS_AUTOSAR
@@ -86,4 +86,4 @@ extern void cmsis_semaphores_test_end(void);
 extern void cmsis_semaphores_test_start(void);
 extern int cmsis_semaphores_test_get_exec_num(void);
 
-#endif /* _AUTSAR_OS_EXT_TEST_H_ */
+#endif /* _AUTOSAR_OS_EXT_TEST_H_ */

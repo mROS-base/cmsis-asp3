@@ -1,5 +1,5 @@
-#ifndef _AUTSAR_OS_EXT_CONFIG_UTILS_H_
-#define _AUTSAR_OS_EXT_CONFIG_UTILS_H_
+#ifndef _AUTOSAR_OS_EXT_CONFIG_UTILS_H_
+#define _AUTOSAR_OS_EXT_CONFIG_UTILS_H_
 
 #include "autosar_os_ext_common.h"
 #include "cmsis_os.h"
@@ -37,4 +37,4 @@ extern StatusType AutosarOsTaskConfigGetTaskID(const osThreadFunc_t func, TaskTy
 			* MESSAGE_QUEUE_ENTRY_ALIGNMENT_SIZE	\
 	)
 
-#endif /* _AUTSAR_OS_EXT_CONFIG_UTILS_H_ */
+#endif /* _AUTOSAR_OS_EXT_CONFIG_UTILS_H_ */
