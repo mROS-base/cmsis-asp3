@@ -2,6 +2,7 @@
 #include "cmsis_semaphores_private.h"
 #include "cmsis_autosar_os_task_sync.h"
 #include "cmsis_autosar_os_memory.h"
+#include "autosar_os_ext_common_private.h"
 
 osSemaphoreId_t osSemaphoreNew(uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t * attr)
 {

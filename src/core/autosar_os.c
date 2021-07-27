@@ -1,5 +1,6 @@
 #include "autosar_os_ext_common.h"
 #include "autosar_os_ext_asp_config.h"
+#include "autosar_os_ext_common_private.h"
 
 static uint8_t      sus_all_cnt = 0U;
 static uint8_t      sus_os_cnt = 0U;

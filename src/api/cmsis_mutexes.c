@@ -1,6 +1,7 @@
 #include "cmsis_os.h"
 #include "cmsis_autosar_os_memory.h"
 #include "cmsis_semaphores_private.h"
+#include "autosar_os_ext_common_private.h"
 
 #define AUTOSAR_OSMUTEX_HEAD_MAGICNO		0xDEADEEEB
 typedef struct {

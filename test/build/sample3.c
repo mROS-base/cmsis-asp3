@@ -27,29 +27,10 @@ svc_perror(const char *file, int_t line, const char *expr, ER ercd)
  */
 void main_task(intptr_t exinf)
 {
-	ER ercd;
 	osStatus_t ret;
 
 	SVC_PERROR(syslog_msk_log(LOG_UPTO(LOG_INFO), LOG_UPTO(LOG_EMERG)));
 	syslog(LOG_NOTICE, "Sample program starts (exinf = %d).", (int_t) exinf);
-
-	/*
-	 *  シリアルポートの初期化
-	 *
-	 *  システムログタスクと同じシリアルポートを使う場合など，シリアル
-	 *  ポートがオープン済みの場合にはここでE_OBJエラーになるが，支障は
-	 *  ない．
-	 */
-	/*
-	ercd = serial_opn_por(TASK_PORTID);
-	if (ercd < 0 && MERCD(ercd) != E_OBJ) {
-		syslog(LOG_ERROR, "%s (%d) reported by `serial_opn_por'.",
-									itron_strerror(ercd), SERCD(ercd));
-	}
-	
-	SVC_PERROR(serial_ctl_por(TASK_PORTID,
-							(IOCTL_CRLF | IOCTL_FCSND | IOCTL_FCRCV)));
-	*/
 
 	ret = osThreadTerminate(NULL);
 	if (ret != osOK) {

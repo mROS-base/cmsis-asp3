@@ -1,4 +1,5 @@
 #include "autosar_os_ext_asp_user_config.h"
+#include "autosar_os_ext_common_private.h"
 
 const AutosarOsExtFlagMapEntryType autosar_os_ext_flag_user_map[AUTSAR_OS_EXT_ASP_FLAG_USER_NUM] = {
 		AUTSAR_OS_EXT_FLAG_MAP_ENTRY(AutosarOsTaskTestControl),

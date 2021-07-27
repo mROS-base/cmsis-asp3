@@ -1,4 +1,5 @@
 #include "autosar_os_ext_sys_config.h"
+#include "autosar_os_ext_common_private.h"
 #include "cmsis_user_config.h"
 
 StatusType AutosarOsTaskConfigSet(const osThreadFunc_t func, void *argument)
@@ -10,7 +11,7 @@ StatusType AutosarOsTaskConfigSet(const osThreadFunc_t func, void *argument)
 	user_thread_num = cmsis_get_user_thread_num();
 	map_p = cmsis_get_user_thread_map();
 
-	for (i = 0; i < cmsis_get_user_thread_num; i++)
+	for (i = 0; i < user_thread_num; i++)
 	{
 		if (map_p[i].func == func) {
 			map_p[i].argument = argument;

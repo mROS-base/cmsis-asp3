@@ -1,5 +1,6 @@
 #include "autosar_os_ext_testfw.h"
 #include "autosar_os_ext_user_config.h"
+#include "autosar_os_ext_common_private.h"
 #include <string.h>
 
 void autosar_os_ext_testfw_setfunc(TaskType TaskID, void (*func) (void*))

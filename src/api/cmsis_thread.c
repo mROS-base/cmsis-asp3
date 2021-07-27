@@ -1,6 +1,7 @@
 #include "cmsis_os.h"
 #include "autosar_os_ext_common.h"
 #include "autosar_os_ext_sys_config.h"
+#include "autosar_os_ext_common_private.h"
 
 osThreadId_t osThreadNew(osThreadFunc_t	func, void *argument, const osThreadAttr_t *attr)
 {
