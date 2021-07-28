@@ -4,7 +4,6 @@ APPLDIR	+= $(AUTOSAR_OS_EXTEND_DIR)/test
 APPLDIR	+= $(AUTOSAR_OS_EXTEND_DIR)/test/api_test
 APPLDIR	+= $(AUTOSAR_OS_EXTEND_DIR)/test/fw
 APPLDIR	+= $(AUTOSAR_OS_EXTEND_DIR)/test/config
-APPLDIR	+= $(AUTOSAR_OS_EXTEND_DIR)/test/config/asp3
 APPLDIR	+= $(AUTOSAR_OS_EXTEND_DIR)/test/build
 
 APPL_COBJS	+= autosar_os_ext_test.o
