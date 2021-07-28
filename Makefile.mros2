@@ -12,7 +12,6 @@ APPLDIR	+= $(AUTOSAR_OS_EXT_DIR)/api
 APPLDIR	+= $(AUTOSAR_OS_EXT_DIR)/core
 APPLDIR	+= $(AUTOSAR_OS_EXT_DIR)/sys
 APPLDIR += $(AUTOSAR_OS_EXT_DIR)/config
-APPLDIR += $(AUTOSAR_OS_EXT_DIR)/config/asp3
 
 APPL_COBJS += cmsis_generic.o
 APPL_COBJS += cmsis_kernel.o
