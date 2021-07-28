@@ -7,7 +7,7 @@ ER AutosarOsExtTask2EventFlag(ID taskID, ID *flgid)
 	uint32_t i;
 
 	int flag_user_num;
-	AutosarOsExtFlagMapEntryType *user_map_p;
+	const AutosarOsExtFlagMapEntryType *user_map_p;
 
 	user_map_p = cmsis_get_flag_user_map();
 	flag_user_num = cmsis_get_flag_user_num();
