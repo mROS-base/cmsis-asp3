@@ -1,7 +1,7 @@
 #include "syssvc/serial.h"
 #include "syssvc/syslog.h"
 #include "kernel_cfg.h"
-#include "sample1.h"
+#include "test.h"
 #include "stm32f7xx_hal.h"
 
 #include "cmsis_os.h"
