@@ -1,10 +1,10 @@
-#include "atk2ext_common.h"
+#include "autosar_os_ext_common.h"
 #include "cmsis_os.h"
-#include "atk2ext_test.h"
-#include "atk2ext_testfw.h"
-#include "atk2ext_user_config.h"
+#include "autosar_os_ext_test.h"
+#include "autosar_os_ext_testfw.h"
+#include "autosar_os_ext_user_config.h"
 
-#include "cmsis_atk2_time.h"
+#include "cmsis_autosar_os_time.h"
 
 static void test_gettick_01(void);
 static void test_gettick_02(void);
@@ -27,12 +27,12 @@ static void test_exec(void (*exec_test_func)(void))
 #define TESTNAME "cmsis_kernel_test"
 void cmsis_kernel_test_init(void)
 {
-	atk2ext_testfw_start_test(TESTNAME);
+	autosar_os_ext_testfw_start_test(TESTNAME);
 	return;
 }
 void cmsis_kernel_test_end(void)
 {
-	atk2ext_testfw_end_test();
+	autosar_os_ext_testfw_end_test();
 	return;
 }
 
@@ -81,7 +81,7 @@ static void test_gettick_01(void)
 		wakeup_time = osKernelGetTickCount();
 		TestAssertInRange(api_name, 1, wakeup_time, wakeup_time+1U, TEST_KERNEL_SLEEP_TIME_100ms);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -90,10 +90,10 @@ static void test_gettick_01(void)
 static void test_gettick_02(void)
 {
 	{
-		atk2ext_testfw_set_cyclic_handler_func(test_gettick_callback1, NULL);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_gettick_callback1, NULL);
 		(void)osDelay(TEST_KERNEL_SLEEP_TIME_200ms);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;

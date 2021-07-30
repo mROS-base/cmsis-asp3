@@ -1,10 +1,10 @@
-#include "atk2ext_common.h"
+#include "autosar_os_ext_common.h"
 #include "cmsis_os.h"
-#include "atk2ext_test.h"
-#include "atk2ext_testfw.h"
-#include "atk2ext_user_config.h"
+#include "autosar_os_ext_test.h"
+#include "autosar_os_ext_testfw.h"
+#include "autosar_os_ext_user_config.h"
 
-#include "cmsis_atk2_time.h"
+#include "cmsis_autosar_os_time.h"
 
 #define TEST_MUTEXES_DELAY_TIME_10ms		10U
 #define TEST_MUTEXES_DELAY_TIME_100ms		100U
@@ -51,12 +51,12 @@ static void test_exec(void (*exec_test_func)(void))
 
 void cmsis_mutexes_test_init(void)
 {
-	atk2ext_testfw_start_test(TESTNAME);
+	autosar_os_ext_testfw_start_test(TESTNAME);
 	return;
 }
 void cmsis_mutexes_test_end(void)
 {
-	atk2ext_testfw_end_test();
+	autosar_os_ext_testfw_end_test();
 	return;
 }
 
@@ -172,8 +172,8 @@ static void test_acquire_task_callback3(void *argp)
 	osStatus_t err;
 
 	info = (TestAcquireInfoType*)argp;
-	atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_acquire_task_callback4);
-	(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)info, NULL);
+	autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_acquire_task_callback4);
+	(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)info, NULL);
 
 	err = osMutexAcquire(info->id, osWaitForever);
 	TestAssertEq(info->api_name, 1, osOK, err);
@@ -221,7 +221,7 @@ static void test_New_01(void)
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	return;
 }
@@ -243,7 +243,7 @@ static void test_Delete_01(void)
 		TestAssertEq(api_name, 2, osOK, err);
 
 		//done
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	return;
 }
@@ -266,8 +266,8 @@ static void test_Delete_02(void)
 		info.api_name = "osMutexDelete:No.2:callback";
 		info.id = id;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_release_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_release_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		//do
 		err = osMutexDelete(id);
@@ -279,7 +279,7 @@ static void test_Delete_02(void)
 
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 5, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	return;
 }
@@ -303,7 +303,7 @@ static void test_Delete_03(void)
 		TestAssertEq(api_name, 3, osErrorParameter, err);
 
 		//done
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	return;
 }
@@ -332,7 +332,7 @@ static void test_Acquire_01(void)
 
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -354,10 +354,10 @@ static void test_Acquire_02(void)
 		info.api_name = "osMutexAcquire:No.2:callback";
 		info.id = id;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_release_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_release_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
 
 		//do
 		err = osMutexAcquire(id, 0);
@@ -368,7 +368,7 @@ static void test_Acquire_02(void)
 
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 3, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -391,10 +391,10 @@ static void test_Acquire_03(void)
 		info.api_name = "osMutexAcquire:No.3:callback";
 		info.id = id;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_release_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_release_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
 
 		//do
 		start_time = osKernelGetTickCount();
@@ -408,7 +408,7 @@ static void test_Acquire_03(void)
 
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -436,14 +436,14 @@ static void test_Acquire_04(void)
 		err = osMutexAcquire(id, 0);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		Atk2TimeIncTickCountSet((osWaitForever - 10U));
+		AutosarOsTimeIncTickCountSet((osWaitForever - 10U));
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback5);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback5);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		//do
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_acquire_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_acquire_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, (void*)&info, NULL);
 		(void)osDelay(TEST_MUTEXES_DELAY_TIME_100ms);
 
 		test_acquire_task_waekup[test_acquire_task_cunt] = TEST_ACQUIRE_L_TASK;
@@ -459,7 +459,7 @@ static void test_Acquire_04(void)
 
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 7, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -487,8 +487,8 @@ static void test_Acquire_05(void)
 		//do
 		err = osMutexAcquire(id, 0);
 		TestAssertEq(api_name, 2, osOK, err);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_acquire_task_callback3);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_acquire_task_callback3);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		test_acquire_task_waekup[test_acquire_task_cunt] = TEST_ACQUIRE_L_TASK;
 		test_acquire_task_cunt++;
@@ -503,7 +503,7 @@ static void test_Acquire_05(void)
 		//done
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 7, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -528,7 +528,7 @@ static void test_Acquire_06(void)
 		TestAssertEq(api_name, 3, osErrorParameter, err);
 
 		//done
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -556,8 +556,8 @@ static void test_Release_01(void)
 		info.api_name = "osMutexRelease:No.1:callback";
 		info.id = id;
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_release_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, (void*)&info, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_release_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, (void*)&info, NULL);
 
 		//do
 		err = osMutexRelease(id);
@@ -567,7 +567,7 @@ static void test_Release_01(void)
 
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 4, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -597,7 +597,7 @@ static void test_Release_02(void)
 		//done
 		err = osMutexDelete(id);
 		TestAssertEq(api_name, 5, osOK, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;
@@ -624,7 +624,7 @@ static void test_Release_03(void)
 
 		//done
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 
 	return;

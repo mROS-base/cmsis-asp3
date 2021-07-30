@@ -1,8 +1,8 @@
-#include "atk2ext_common.h"
+#include "autosar_os_ext_common.h"
 #include "cmsis_os.h"
-#include "atk2ext_test.h"
-#include "atk2ext_testfw.h"
-#include "atk2ext_user_config.h"
+#include "autosar_os_ext_test.h"
+#include "autosar_os_ext_testfw.h"
+#include "autosar_os_ext_user_config.h"
 
 
 static void test_thread_create_01(void);
@@ -21,12 +21,12 @@ static void test_exec(void (*exec_test_func)(void))
 #define TESTNAME "cmsis_thread_test"
 void cmsis_thread_test_init(void)
 {
-	atk2ext_testfw_start_test(TESTNAME);
+	autosar_os_ext_testfw_start_test(TESTNAME);
 	return;
 }
 void cmsis_thread_test_end(void)
 {
-	atk2ext_testfw_end_test();
+	autosar_os_ext_testfw_end_test();
 	return;
 }
 
@@ -55,9 +55,9 @@ static void test_thread_create_01(void)
 {
 	osThreadDef_t thrdef;
 
-	thrdef.pthread = (os_pthread)Atk2TaskTestConsumer1_Body;
+	thrdef.pthread = (os_pthread)AutosarOsTaskTestConsumer1_Body;
 
-	atk2ext_testfw_setfunc(Atk2TaskTestConsumer1, test_thread_task_callback1);
+	autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer1, test_thread_task_callback1);
 	osThreadId id = osThreadCreate(&thrdef, "osThreadCreate_Test01");
 	TestAssertNotEq("osThreadCreate:No.1", 1, NULL, id);
 	osDelay(10);
@@ -73,8 +73,8 @@ static void test_thread_task_callback2(void *argument)
 
 static void test_thread_new_01(void)
 {
-	atk2ext_testfw_setfunc(Atk2TaskTestConsumer2, test_thread_task_callback2);
-	osThreadId_t id = osThreadNew(Atk2TaskTestConsumer2_Body, "osThreadNew_Test01", NULL);
+	autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer2, test_thread_task_callback2);
+	osThreadId_t id = osThreadNew(AutosarOsTaskTestConsumer2_Body, "osThreadNew_Test01", NULL);
 	TestAssertNotEq("osThreadNew:No.1", 1, NULL, id);
 	osDelay(10);
 	return;
@@ -93,8 +93,8 @@ static void test_thread_task_callback3(void *argument)
 
 static void test_thread_term_01(void)
 {
-	atk2ext_testfw_setfunc(Atk2TaskTestConsumer3, test_thread_task_callback3);
-	osThreadId_t id = osThreadNew(Atk2TaskTestConsumer3_Body, "osThreadTerminate_Test01", NULL);
+	autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer3, test_thread_task_callback3);
+	osThreadId_t id = osThreadNew(AutosarOsTaskTestConsumer3_Body, "osThreadTerminate_Test01", NULL);
 	TestAssertNotEq("osThreadTerminate:No.1", 1, NULL, id);
 	osDelay(10);
 

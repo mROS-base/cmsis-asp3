@@ -1,8 +1,8 @@
-#include "atk2ext_common.h"
+#include "autosar_os_ext_common.h"
 #include "cmsis_os.h"
-#include "atk2ext_test.h"
-#include "atk2ext_testfw.h"
-#include "atk2ext_user_config.h"
+#include "autosar_os_ext_test.h"
+#include "autosar_os_ext_testfw.h"
+#include "autosar_os_ext_user_config.h"
 
 static void test_new_01(void);
 
@@ -43,12 +43,12 @@ static void test_exec(void (*exec_test_func)(void))
 #define TESTNAME "cmsis_message_queue_test"
 void cmsis_message_queue_test_init(void)
 {
-	atk2ext_testfw_start_test(TESTNAME);
+	autosar_os_ext_testfw_start_test(TESTNAME);
 	return;
 }
 void cmsis_message_queue_test_end(void)
 {
-	atk2ext_testfw_end_test();
+	autosar_os_ext_testfw_end_test();
 	return;
 }
 
@@ -111,7 +111,7 @@ static void test_put_02_isr_callback(void)
 {
 	char *api_name = "osMessageQueuePut:isr_callback";
 	int msg_data = 324;
-	osMessageQueueId_t msgq_id = (osMessageQueueId_t)atk2ext_testfw_get_cyclic_handler_argp();
+	osMessageQueueId_t msgq_id = (osMessageQueueId_t)autosar_os_ext_testfw_get_cyclic_handler_argp();
 	if (msgq_id == NULL) {
 		return;
 	}
@@ -120,7 +120,7 @@ static void test_put_02_isr_callback(void)
 	osStatus err = osMessageQueuePut(msgq_id, (void*)&msg_data, 0, 0);
 	TestAssertEq(api_name, 3, osOK, err);
 
-	atk2ext_testfw_clr_cyclic_handler_func();
+	autosar_os_ext_testfw_clr_cyclic_handler_func();
 	return;
 }
 
@@ -132,7 +132,7 @@ static void test_put_02(void)
 	osMessageQueueId_t msgq_id = osMessageQueueNew(1, sizeof(int), NULL);
 	TestAssertNotEq(api_name, 1, NULL, msgq_id);
 	{
-		atk2ext_testfw_set_cyclic_handler_func(test_put_02_isr_callback, msgq_id);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_put_02_isr_callback, msgq_id);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
@@ -189,8 +189,8 @@ static void test_put_11(void)
 		osStatus err = osMessageQueuePut(msgq_id, (void*)&msg_data, 0, osWaitForever);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier1, test_put_task_callback1);
-		(void)osThreadNew(Atk2TaskTestSupplier1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier1, test_put_task_callback1);
+		(void)osThreadNew(AutosarOsTaskTestSupplier1_Body, msgq_id, NULL);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
@@ -204,7 +204,7 @@ static void test_put_11(void)
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
 		TestAssertEq(api_name, 8, osErrorResource, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 9, osOK, err);
@@ -221,11 +221,11 @@ static void test_put_12(void)
 		osStatus err = osMessageQueuePut(msgq_id, (void*)&msg_data, 0, osWaitForever);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier1, test_put_task_callback1);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_put_task_callback2);
-		(void)osThreadNew(Atk2TaskTestSupplier1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier1, test_put_task_callback1);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_put_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestSupplier1_Body, msgq_id, NULL);
 		osDelay(10);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, msgq_id, NULL);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, msgq_id, NULL);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
@@ -243,7 +243,7 @@ static void test_put_12(void)
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
 		TestAssertEq(api_name, 10, osErrorResource, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 11, osOK, err);
@@ -260,14 +260,14 @@ static void test_put_13(void)
 		osStatus err = osMessageQueuePut(msgq_id, (void*)&msg_data, 0, osWaitForever);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier1, test_put_task_callback1);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier2, test_put_task_callback2);
-		atk2ext_testfw_setfunc(Atk2TaskTestSupplier3, test_put_task_callback3);
-		(void)osThreadNew(Atk2TaskTestSupplier1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier1, test_put_task_callback1);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier2, test_put_task_callback2);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestSupplier3, test_put_task_callback3);
+		(void)osThreadNew(AutosarOsTaskTestSupplier1_Body, msgq_id, NULL);
 		osDelay(10);
-		(void)osThreadNew(Atk2TaskTestSupplier2_Body, msgq_id, NULL);
+		(void)osThreadNew(AutosarOsTaskTestSupplier2_Body, msgq_id, NULL);
 		osDelay(10);
-		(void)osThreadNew(Atk2TaskTestSupplier3_Body, msgq_id, NULL);
+		(void)osThreadNew(AutosarOsTaskTestSupplier3_Body, msgq_id, NULL);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
@@ -289,7 +289,7 @@ static void test_put_13(void)
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
 		TestAssertEq(api_name, 12, osErrorResource, err);
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 13, osOK, err);
@@ -365,14 +365,14 @@ static void test_get_01(void)
 		err = osMessageQueuePut(msgq_id, (void*)&msg_data, 0, osWaitForever);
 		TestAssertEq(api_name, 2, osOK, err);
 
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer1, test_get_01_task_callback);
-		(void)osThreadNew(Atk2TaskTestConsumer1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer1, test_get_01_task_callback);
+		(void)osThreadNew(AutosarOsTaskTestConsumer1_Body, msgq_id, NULL);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
 		TestAssertEq(api_name, 6, osErrorResource, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 7, osOK, err);
@@ -383,7 +383,7 @@ static void test_get_02_isr_callback(void)
 {
 	char *api_name = "osMessageQueueGet:isr_callback";
 	int msg_data;
-	osMessageQueueId_t msgq_id = (osMessageQueueId_t)atk2ext_testfw_get_cyclic_handler_argp();
+	osMessageQueueId_t msgq_id = (osMessageQueueId_t)autosar_os_ext_testfw_get_cyclic_handler_argp();
 	if (msgq_id == NULL) {
 		return;
 	}
@@ -397,7 +397,7 @@ static void test_get_02_isr_callback(void)
 	TestAssertEq(api_name, 6, osOK, err);
 	TestAssertEq(api_name, 7, 512, msg_data);
 
-	atk2ext_testfw_clr_cyclic_handler_func();
+	autosar_os_ext_testfw_clr_cyclic_handler_func();
 	return;
 }
 
@@ -416,7 +416,7 @@ static void test_get_02(void)
 		err = osMessageQueuePut(msgq_id, (void*)&msg_data2, 0, osWaitForever);
 		TestAssertEq(api_name, 3, osOK, err);
 
-		atk2ext_testfw_set_cyclic_handler_func(test_get_02_isr_callback, msgq_id);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_get_02_isr_callback, msgq_id);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data1, 0, 0);
@@ -449,7 +449,7 @@ static void test_get_08_isr_callback(void)
 {
 	char *api_name = "osMessageQueueGet:isr_callback";
 	int msg_data;
-	osMessageQueueId_t msgq_id = (osMessageQueueId_t)atk2ext_testfw_get_cyclic_handler_argp();
+	osMessageQueueId_t msgq_id = (osMessageQueueId_t)autosar_os_ext_testfw_get_cyclic_handler_argp();
 	if (msgq_id == NULL) {
 		return;
 	}
@@ -458,7 +458,7 @@ static void test_get_08_isr_callback(void)
 	osStatus_t err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
 	TestAssertEq(api_name, 8, osErrorResource, err);
 
-	atk2ext_testfw_clr_cyclic_handler_func();
+	autosar_os_ext_testfw_clr_cyclic_handler_func();
 	return;
 }
 
@@ -471,7 +471,7 @@ static void test_get_08(void)
 	osMessageQueueId_t msgq_id = osMessageQueueNew(2, sizeof(int), NULL);
 	TestAssertNotEq(api_name, 1, NULL, msgq_id);
 	{
-		atk2ext_testfw_set_cyclic_handler_func(test_get_08_isr_callback, msgq_id);
+		autosar_os_ext_testfw_set_cyclic_handler_func(test_get_08_isr_callback, msgq_id);
 		osDelay(10);
 
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data1, 0, 0);
@@ -526,8 +526,8 @@ static void test_get_10(void)
 	TestAssertNotEq(api_name, 1, NULL, msgq_id);
 	{
 
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer1, test_get_10_task_callback);
-		(void)osThreadNew(Atk2TaskTestConsumer1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer1, test_get_10_task_callback);
+		(void)osThreadNew(AutosarOsTaskTestConsumer1_Body, msgq_id, NULL);
 		osDelay(1000);
 
 		err = osMessageQueuePut(msgq_id, (void*)&msg_data, 0, osWaitForever);
@@ -537,7 +537,7 @@ static void test_get_10(void)
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data, 0, 0);
 		TestAssertEq(api_name, 6, osErrorResource, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 7, osOK, err);
@@ -594,11 +594,11 @@ static void test_get_11(void)
 	TestAssertNotEq(api_name, 1, NULL, msgq_id);
 	{
 
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer1, test_get_task_callback1);
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer2, test_get_task_callback2);
-		(void)osThreadNew(Atk2TaskTestConsumer1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer1, test_get_task_callback1);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer2, test_get_task_callback2);
+		(void)osThreadNew(AutosarOsTaskTestConsumer1_Body, msgq_id, NULL);
 		osDelay(10);
-		(void)osThreadNew(Atk2TaskTestConsumer2_Body, msgq_id, NULL);
+		(void)osThreadNew(AutosarOsTaskTestConsumer2_Body, msgq_id, NULL);
 		osDelay(10);
 
 		err = osMessageQueuePut(msgq_id, (void*)&msg_data1, 0, osWaitForever);
@@ -610,7 +610,7 @@ static void test_get_11(void)
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data1, 0, 0);
 		TestAssertEq(api_name, 9, osErrorResource, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 10, osOK, err);
@@ -628,14 +628,14 @@ static void test_get_12(void)
 	TestAssertNotEq(api_name, 1, NULL, msgq_id);
 	{
 
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer1, test_get_task_callback1);
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer2, test_get_task_callback2);
-		atk2ext_testfw_setfunc(Atk2TaskTestConsumer3, test_get_task_callback3);
-		(void)osThreadNew(Atk2TaskTestConsumer1_Body, msgq_id, NULL);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer1, test_get_task_callback1);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer2, test_get_task_callback2);
+		autosar_os_ext_testfw_setfunc(AutosarOsTaskTestConsumer3, test_get_task_callback3);
+		(void)osThreadNew(AutosarOsTaskTestConsumer1_Body, msgq_id, NULL);
 		osDelay(10);
-		(void)osThreadNew(Atk2TaskTestConsumer2_Body, msgq_id, NULL);
+		(void)osThreadNew(AutosarOsTaskTestConsumer2_Body, msgq_id, NULL);
 		osDelay(10);
-		(void)osThreadNew(Atk2TaskTestConsumer3_Body, msgq_id, NULL);
+		(void)osThreadNew(AutosarOsTaskTestConsumer3_Body, msgq_id, NULL);
 		osDelay(10);
 
 		err = osMessageQueuePut(msgq_id, (void*)&msg_data1, 0, osWaitForever);
@@ -649,7 +649,7 @@ static void test_get_12(void)
 		err = osMessageQueueGet(msgq_id, (void*)&msg_data1, 0, 0);
 		TestAssertEq(api_name, 8, osErrorResource, err);
 
-		atk2ext_testfw_clrfunc();
+		autosar_os_ext_testfw_clrfunc();
 	}
 	err = osMessageQueueDelete(msgq_id);
 	TestAssertEq(api_name, 9, osOK, err);
@@ -698,7 +698,7 @@ static void test_getcnt_02_isr_callback(void)
 {
 	char *api_name = "osMessageQueueGetCount:isr_callback";
 
-	osMessageQueueId_t msgq_id = (osMessageQueueId_t)atk2ext_testfw_get_cyclic_handler_argp();
+	osMessageQueueId_t msgq_id = (osMessageQueueId_t)autosar_os_ext_testfw_get_cyclic_handler_argp();
 	if (msgq_id == NULL) {
 		return;
 	}
@@ -707,7 +707,7 @@ static void test_getcnt_02_isr_callback(void)
 	uint32_t count = osMessageQueueGetCount(msgq_id);
 	TestAssertEq(api_name, 4, 10, count);
 
-	atk2ext_testfw_clr_cyclic_handler_func();
+	autosar_os_ext_testfw_clr_cyclic_handler_func();
 	return;
 }
 
@@ -726,7 +726,7 @@ static void test_getcnt_02(void)
 		//TestAssertEq(api_name, i + 2, osOK, err);
 	}
 
-	atk2ext_testfw_set_cyclic_handler_func(test_getcnt_02_isr_callback, msgq_id);
+	autosar_os_ext_testfw_set_cyclic_handler_func(test_getcnt_02_isr_callback, msgq_id);
 	osDelay(10);
 
 	for (i = 0; i < 10; i++) {
