@@ -7,6 +7,6 @@
 #include "autosar_os_ext_asp3_config.h"
 #include "autosar_os_ext_common.h"
 
-
+#include "cmsis_user_config.h"
 
 #endif /* _CMSIS_TYPES_H_ */
