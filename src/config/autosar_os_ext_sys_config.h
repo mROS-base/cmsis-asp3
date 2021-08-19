@@ -11,9 +11,9 @@
  ***********************************************/
 
 typedef struct {
-	TaskType			taskID;
-	osThreadFunc_t		func;
-	void 				*argument;
+  TaskType			taskID;
+  osThreadFunc_t		func;
+  void 				*argument;
 } UserThreadAutosarOsTaskMapEntryType;
 
 extern StatusType AutosarOsTaskConfigSet(const osThreadFunc_t func, void *argument);

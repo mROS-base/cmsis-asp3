@@ -6,8 +6,8 @@
 #include <string.h>
 
 typedef struct {
-	TaskType TaskID;
-	void (*func) (void*);
+  TaskType TaskID;
+  void (*func) (void*);
 } AutosarOsExtTestFwFuncMapEntryType;
 extern AutosarOsExtTestFwFuncMapEntryType autosar_os_ext_testfw_funcmap[USER_THREAD_NUM];
 
@@ -78,12 +78,12 @@ extern void *autosar_os_ext_testfw_get_cyclic_handler_argp(void);
 
 
 typedef struct {
-	bool_t result;
-	char* testname;
-	void (*init) (void);
-	void (*start) (void);
-	void (*end) (void);
-	int (*get_exec_num) (void);
+  bool_t result;
+  char* testname;
+  void (*init) (void);
+  void (*start) (void);
+  void (*end) (void);
+  int (*get_exec_num) (void);
 } TestFwOperationType;
 
 #define TEST_FW_OP_NUM	7U
