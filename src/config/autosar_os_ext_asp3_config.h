@@ -4,8 +4,8 @@
 #include "autosar_os_ext_common.h"
 
 typedef struct {
-	ID taskID;
-	ID flgid;
+  ID taskID;
+  ID flgid;
 } AutosarOsExtFlagMapEntryType;
 
 #define AUTOSAR_OS_EXT_FLAG_MAP_ENTRY(taskname)	\

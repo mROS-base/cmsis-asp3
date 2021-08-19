@@ -63,8 +63,8 @@ extern "C" {
  *  キューのデータ構造の定義
  */
 typedef struct cmsis_impl_queue {
-	struct cmsis_impl_queue *p_next;		/* 次エントリへのポインタ */
-	struct cmsis_impl_queue *p_prev;		/* 前エントリへのポインタ */
+  struct cmsis_impl_queue *p_next;		/* 次エントリへのポインタ */
+  struct cmsis_impl_queue *p_prev;		/* 前エントリへのポインタ */
 } CMSIS_IMPL_QUEUE;
 
 /*
@@ -75,8 +75,8 @@ typedef struct cmsis_impl_queue {
 Inline void
 cmsis_impl_queue_initialize(CMSIS_IMPL_QUEUE *p_queue)
 {
-	p_queue->p_prev = p_queue;
-	p_queue->p_next = p_queue;
+  p_queue->p_prev = p_queue;
+  p_queue->p_next = p_queue;
 }
 
 /*
@@ -88,10 +88,10 @@ cmsis_impl_queue_initialize(CMSIS_IMPL_QUEUE *p_queue)
 Inline void
 cmsis_impl_queue_insert_prev(CMSIS_IMPL_QUEUE *p_queue, CMSIS_IMPL_QUEUE *p_entry)
 {
-	p_entry->p_prev = p_queue->p_prev;
-	p_entry->p_next = p_queue;
-	p_queue->p_prev->p_next = p_entry;
-	p_queue->p_prev = p_entry;
+  p_entry->p_prev = p_queue->p_prev;
+  p_entry->p_next = p_queue;
+  p_queue->p_prev->p_next = p_entry;
+  p_queue->p_prev = p_entry;
 }
 
 /*
@@ -103,10 +103,10 @@ cmsis_impl_queue_insert_prev(CMSIS_IMPL_QUEUE *p_queue, CMSIS_IMPL_QUEUE *p_entr
 Inline void
 cmsis_impl_queue_insert_next(CMSIS_IMPL_QUEUE *p_queue, CMSIS_IMPL_QUEUE *p_entry)
 {
-	p_entry->p_prev = p_queue;
-	p_entry->p_next = p_queue->p_next;
-	p_queue->p_next->p_prev = p_entry;
-	p_queue->p_next = p_entry;
+  p_entry->p_prev = p_queue;
+  p_entry->p_next = p_queue->p_next;
+  p_queue->p_next->p_prev = p_entry;
+  p_queue->p_next = p_entry;
 }
 
 /*
@@ -117,8 +117,8 @@ cmsis_impl_queue_insert_next(CMSIS_IMPL_QUEUE *p_queue, CMSIS_IMPL_QUEUE *p_entr
 Inline void
 cmsis_impl_queue_delete(CMSIS_IMPL_QUEUE *p_entry)
 {
-	p_entry->p_prev->p_next = p_entry->p_next;
-	p_entry->p_next->p_prev = p_entry->p_prev;
+  p_entry->p_prev->p_next = p_entry->p_next;
+  p_entry->p_next->p_prev = p_entry->p_prev;
 }
 
 /*
@@ -132,13 +132,13 @@ cmsis_impl_queue_delete(CMSIS_IMPL_QUEUE *p_entry)
 Inline CMSIS_IMPL_QUEUE *
 cmsis_impl_queue_delete_next(CMSIS_IMPL_QUEUE *p_queue)
 {
-	CMSIS_IMPL_QUEUE	*p_entry;
+  CMSIS_IMPL_QUEUE	*p_entry;
 
-	assert(p_queue->p_next != p_queue);
-	p_entry = p_queue->p_next;
-	p_queue->p_next = p_entry->p_next;
-	p_entry->p_next->p_prev = p_queue;
-	return(p_entry);
+  assert(p_queue->p_next != p_queue);
+  p_entry = p_queue->p_next;
+  p_queue->p_next = p_entry->p_next;
+  p_entry->p_next->p_prev = p_queue;
+  return(p_entry);
 }
 
 /*
@@ -149,11 +149,11 @@ cmsis_impl_queue_delete_next(CMSIS_IMPL_QUEUE *p_queue)
 Inline bool_t
 cmsis_impl_queue_empty(CMSIS_IMPL_QUEUE *p_queue)
 {
-	if (p_queue->p_next == p_queue) {
-		assert(p_queue->p_prev == p_queue);
-		return(true);
-	}
-	return(false);
+  if (p_queue->p_next == p_queue) {
+    assert(p_queue->p_prev == p_queue);
+    return(true);
+  }
+  return(false);
 }
 
 #ifdef __cplusplus

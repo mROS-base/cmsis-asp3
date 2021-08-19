@@ -5,10 +5,10 @@
 #include "cmsis_autosar_os_queue.h"
 #define AUTOSAR_OSSEM_HEAD_MAGICNO		0xDEADBEED
 typedef struct {
-	uint32_t			max_count;
-	uint32_t			count;
-	uint32_t			magicno;
-	AutosarOsQueueHeadType	waiting;
+  uint32_t			max_count;
+  uint32_t			count;
+  uint32_t			magicno;
+  AutosarOsQueueHeadType	waiting;
 } CmsisSemType;
 
 extern osStatus_t osSemaphoreAcquire_nolock(CmsisSemType *semp, uint32_t timeout, TaskType taskID);

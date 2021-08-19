@@ -4,27 +4,27 @@
 
 void *AutosarOsMemoryAlloc(uint32_t size)
 {
-	void *addrp = NULL;
+  void *addrp = NULL;
 
-	if (CurrentContextIsISR()) {
-		return NULL;
-	}
-	SuspendOSInterrupts();
-	addrp = malloc(size);
-	ResumeOSInterrupts();
+  if (CurrentContextIsISR()) {
+    return NULL;
+  }
+  SuspendOSInterrupts();
+  addrp = malloc(size);
+  ResumeOSInterrupts();
 
-	return addrp;
+  return addrp;
 }
 
 void AutosarOsMemoryFree(void *addrp)
 {
-	if (CurrentContextIsISR()) {
-		return;
-	}
-	if (addrp != NULL) {
-		SuspendOSInterrupts();
-		free(addrp);
-		ResumeOSInterrupts();
-	}
-	return;
+  if (CurrentContextIsISR()) {
+    return;
+  }
+  if (addrp != NULL) {
+    SuspendOSInterrupts();
+    free(addrp);
+    ResumeOSInterrupts();
+  }
+  return;
 }

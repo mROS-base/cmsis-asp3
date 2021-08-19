@@ -3,5 +3,5 @@
 
 uint32_t osKernelGetTickCount(void)
 {
-	return AutosarOsTimeGetTickCount();
+  return AutosarOsTimeGetTickCount();
 }

@@ -4,8 +4,8 @@
 #include "autosar_os_ext_common.h"
 
 typedef struct {
-	uint16_t	count;
-	CMSIS_IMPL_QUEUE		*entries;
+  uint16_t	count;
+  CMSIS_IMPL_QUEUE		*entries;
 } AutosarOsQueueHeadType;
 
 #define AutosarOsQueueHeadInitializer(var)	\

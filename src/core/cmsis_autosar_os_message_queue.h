@@ -6,34 +6,34 @@
 
 #define AUTOSAR_OSMESSAGE_QUEUE_HEAD_MAGICNO		0xDEAFBEAD
 typedef struct {
-	uint16_t			prealloc_num;
-	uint16_t			entry_size;
-	uint32_t			magicno;
-	AutosarOsQueueHeadType	used;
-	AutosarOsQueueHeadType	free;
-	AutosarOsQueueHeadType	getter_waiting;
-	AutosarOsQueueHeadType	putter_waiting;
+  uint16_t			prealloc_num;
+  uint16_t			entry_size;
+  uint32_t			magicno;
+  AutosarOsQueueHeadType	used;
+  AutosarOsQueueHeadType	free;
+  AutosarOsQueueHeadType	getter_waiting;
+  AutosarOsQueueHeadType	putter_waiting;
 } AutosarOsMessageQueueType;
 
 
 typedef struct {
-	CMSIS_IMPL_QUEUE						queue;
-	/*
-	 * Priority
-	 *
-	 *  Highest  UINT16_MAX
-	 *  Lowest   0
-	 */
-	uint16_t					prio;
-	void						*data;
+  CMSIS_IMPL_QUEUE						queue;
+  /*
+   * Priority
+   *
+   *  Highest  UINT16_MAX
+   *  Lowest   0
+   */
+  uint16_t					prio;
+  void						*data;
 } AutosarOsMessageQueueEntryType;
 
 
 typedef struct {
-	uint16_t 					prealloc_num;
-	uint16_t 					entry_size;
-	AutosarOsMessageQueueEntryType   *control_datap;
-	void 	 					*entries_datap;
+  uint16_t 					prealloc_num;
+  uint16_t 					entry_size;
+  AutosarOsMessageQueueEntryType   *control_datap;
+  void 	 					*entries_datap;
 } AutosarOsMessageQueueConfigType;
 extern AutosarOsMessageQueueType *AutosarOsMessageQueueCreate(AutosarOsMessageQueueConfigType *config);
 extern StatusType AutosarOsMessageQueueDelete(AutosarOsMessageQueueType *qh);
